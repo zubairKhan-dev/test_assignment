@@ -7,40 +7,20 @@ import {
   TouchableOpacity, Dimensions, Image,
 } from "react-native";
 import { connect } from 'react-redux'
-import theme from "../utill/theme";
-import Button from "../../components/Button";
-import SliderComponent from "../../components/Slider";
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart
-} from "react-native-chart-kit";
+import theme from "../../utill/theme";
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { styles } from "./styles";
+import SliderComponent from "../../../components/Slider";
+import Button from "../../../components/Button";
 
-const {width: viewportWidth, height: viewportHeight} = Dimensions.get('window');
-
-function wp(percentage) {
-  const value = (percentage * viewportWidth) / 100;
-  return Math.round(value);
-}
-
-function hp(percentage) {
-  const value = (percentage * viewportHeight) / 100;
-  return Math.round(value);
-}
 
 const CounterApp=(props)=> {
 
-  const data = {
-    labels: ["Swim", "Bike", "Run"], // optional
-    data: [0.4, 0.6, 0.8]
-  };
-
+  //defining the states of widgets
   const [w1, setw1]= useState(true)
   const [w2, setw2]= useState(false)
+
+  //defining state of indicators
   const [dataSet, setDataSet]= useState({
     one: false,
     two: false,
@@ -49,10 +29,13 @@ const CounterApp=(props)=> {
     five: false
   })
 
+  // setting the indicator text
   const [text, setText] =useState('')
 
+  // setting the slider value
   const [fill, setFill]= useState(70)
 
+  // render first widget
   const renderWidgetOne= ()=> {
     return(
       <View>
@@ -90,6 +73,7 @@ const CounterApp=(props)=> {
     )
   }
 
+  // render second widget
   const renderWidgetTwo= ()=> {
     return(
       <View>
@@ -152,31 +136,27 @@ const CounterApp=(props)=> {
 
     return (
       <View style={styles.container}>
+
         <View style={styles.navView}>
           <TouchableOpacity style={[styles.nav, {backgroundColor: w1 ? 'white' : theme.Off_Gray}]} onPress={()=> {
-            setw1(true)
-            setw2(false)
+            setw1(true) // setting state of widget one true so the first widget would render
+            setw2(false) // setting state of widget two false
           }}/>
           <View style={{width: 10}}/>
           <TouchableOpacity style={[styles.nav, {backgroundColor: w2 ? 'white' : theme.Off_Gray}]} onPress={()=> {
-            setw1(false)
-            setw2(true)
+            setw1(false) // setting state of widget one false
+            setw2(true) //setting state of widget two true so the second widget would render
           }}/>
         </View>
+
         <View style={styles.headingView}>
           <Text style={styles.heading}>Rescue Session : Anger and frustration</Text>
-          <Image source={require('../img/close.png')} style={{width: 10, height: 10, tintColor: 'white', marginLeft: 20}}/>
+          <Image source={require('../../img/close.png')} style={{width: 10, height: 10, tintColor: 'white', marginLeft: 20}}/>
         </View>
-        {/*<View style={{ flexDirection: 'row', width: 200, justifyContent: 'space-around' }}>*/}
-        {/*  <TouchableOpacity onPress={() => props.increaseCounter()}>*/}
-        {/*    <Text style={{ fontSize: 20 }}>Increase</Text>*/}
-        {/*  </TouchableOpacity>*/}
-        {/*  <Text style={{ fontSize: 20 }}>{props.counter}</Text>*/}
-        {/*  <TouchableOpacity onPress={() => props.decreaseCounter()}>*/}
-        {/*    <Text style={{ fontSize: 20 }}>Decrease</Text>*/}
-        {/*  </TouchableOpacity>*/}
-        {/*</View>*/}
+
         {w1 ? renderWidgetOne() : renderWidgetTwo()}
+
+        {/*navigating between two widgets*/}
         <Button onPress={()=> {
           setw1(false)
           setw2(true)
@@ -201,71 +181,3 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(mapStateToProps, mapDispatchToProps)(CounterApp)
 
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: theme.Default_Color
-  },
-  nav: {
-    width: wp(45),
-    height: 5,
-    borderRadius: 3,
-    backgroundColor: theme.Off_Gray
-  },
-  navView : {
-    flexDirection: 'row',
-    position: 'absolute',
-    top: 10
- },
-  headingView: {
-    position: 'absolute',
-    top: hp(5),
-    flexDirection: 'row',
-    height: 20,
-    alignItems: 'center'
-  },
-  heading: {
-    textTransform: 'uppercase',
-    color: 'white',
-  },
-  progressCircleDotted :{
-    height: 225,
-    width: 225,
-    borderRadius: 250,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderStyle: 'dashed',
-    borderColor: 'white'
-  },
-  subHeading : {
-    fontSize: 20,
-    fontWeight: '500',
-    color: "white",
-    alignSelf: 'center',
-    textAlign: 'center',
-    wordWrap: 'break-word',
-    width: wp(80),
-    marginBottom: 50
-  },
-  trap: {
-    width: 50,
-    height: 0,
-    borderTopWidth: 30,
-    borderLeftWidth: 20,
-    borderRightWidth: 20,
-    borderRightColor: 'transparent',
-    borderLeftColor: 'transparent',
-    alignSelf: 'center',
-    marginTop: 20
-  },
-  text: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center'
-  }
-});

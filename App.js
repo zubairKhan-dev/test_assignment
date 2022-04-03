@@ -5,7 +5,7 @@ import {
 } from "react-native";
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import CounterApp from "./src/screens/CounterApp";
+import CounterApp from "./src/screens/counter-app-screen";
 /**
  * Store - holds our state - THERE IS ONLY ONE STATE
  * Action - State can be modified using actions - SIMPLE OBJECTS
@@ -28,6 +28,7 @@ const reducer = (state = initialState, action) => {
   return state
 }
 
+//creating store here
 const store = createStore(reducer)
 
 class App extends Component {

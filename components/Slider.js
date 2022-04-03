@@ -21,10 +21,11 @@ const SliderComponent= (props)=> {
       value={props.value}
       minimumValue={0}
       maximumValue={100}
-      onValueChange={props.onValueChange}
+      onValueChange={props.onValueChange} // function to change value on slider movement
       thumbStyle={{ justifyContent: 'center', alignItems: 'center', width: 20 }}
-      trackStyle={{width: wp(80), backgroundColor: '#ffffff', height: 10, borderRadius: 10}}
-      minimumTrackTintColor={'#89CFF0'}
+      trackStyle={{width: wp(80), backgroundColor: '#ffffff', height: 10, borderRadius: 10}} // track style
+      minimumTrackTintColor={'#89CFF0'} // track color
+      // thumb style
       customThumb={
         <View
           style={{
